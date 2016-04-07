@@ -1,0 +1,12 @@
+.spriteScroller {
+	height: $spriteHeight;
+	
+	
+	
+	.sprite {
+		float: left;
+		 
+		width: $spriteWidth;
+		height: $spriteHeight;
+	}
+}

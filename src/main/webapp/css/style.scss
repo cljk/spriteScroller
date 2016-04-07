@@ -1,0 +1,11 @@
+/*
+ * sprite scroller
+ * 
+ * m.pokrandt <marcel.pokrandt@csmp.de>
+ */
+
+$spriteWidth: 30px;
+$spriteHeight: 30px;
+
+@import "layout.scss";
+@import "spriteScrolling.scss";

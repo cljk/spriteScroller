@@ -1,0 +1,44 @@
+<project name="qpdb-skin" default="sass">
+	<property file="build.properties" />
+	<target name="sass-watch" depends="compile-sass">
+		<echo>sass.dir: ${sass.dir}</echo>
+		<echo>sass.exec: ${sass.exec}</echo>
+					
+		<exec executable="${sass.exec}"
+			failonerror="true">
+				<arg value="--watch" />
+				<!--<arg value="- - sourcemap" />-->
+				<arg value="--line-numbers" />
+				<arg value="${sass.dir}/style.scss:${sass.dir}/style.css" />
+		</exec>
+	</target>
+
+	<target name="compile-sass" depends="">
+		<mkdir dir="${sass.css-dest}"/>
+
+		<echo message="Compiling scss files to css..." />
+		<apply executable="${sass.exec}" dest="${sass.dir}"
+			verbose="true" failonerror="true">
+			<!--<arg value="- -unix-newlines" />-->
+			<arg value="--scss" />
+			<srcfile />
+			<targetfile />
+			<fileset dir="${sass.dir}">
+				<include name="**/*.scss.css" />
+				<include name="**/*.scss" />
+				<exclude name="**/_*" />
+			</fileset>
+			<mapper type="glob" from="*.scss" to="*.css" />
+		</apply>
+		<echo message="Done compiling scss files!" />
+	</target>
+
+
+	<target name="sass-info">
+		<echo>sass.exec: ${sass.exec}</echo>
+		<echo>path ${path}</echo>
+				<exec executable="${sass.exec}">
+			<arg line="-v"/>
+		</exec>
+	</target>
+</project>
