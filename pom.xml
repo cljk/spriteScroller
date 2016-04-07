@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>de.csmp</groupId>
+	<artifactId>spritescroller</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>SpriteScroller</name>
+
+	<packaging>war</packaging>
+
+
+	<properties>
+		<timestamp>${maven.build.timestamp}</timestamp>
+	    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+		
+		<jdk.version>1.8</jdk.version>
+		<debug>true</debug>
+
+		<arquillian.version>1.1.11.Final</arquillian.version>
+
+		<sass.OutputStyle>:nested</sass.OutputStyle>
+		<sass-maven-plugin.version>2.5</sass-maven-plugin.version>
+		
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<build>
+		<resources>
+			<resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <excludes>
+                    <exclude>dev/**</exclude>
+                    <exclude>test/**</exclude>
+                    <exclude>prod/**</exclude>
+                </excludes>
+            </resource>
+		</resources>	
+	
+	
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<!-- <warSourceExcludes>**/*.html,**/css/*.css,**/css/*.scss,**/js/*.js</warSourceExcludes> -->
+					<warSourceExcludes>**/css/*.scss, **/css/*.map</warSourceExcludes>
+					<archive>
+						<manifestEntries>
+							<url>${project.url}</url>
+							<release>${project.version}</release>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+					<wtpversion>2.0</wtpversion>
+					<useProjectReferences>false</useProjectReferences>
+				</configuration>
+			</plugin>
+
+ 			<plugin>
+				<groupId>nl.geodienstencentrum.maven</groupId>
+				<artifactId>sass-maven-plugin</artifactId>
+				<version>${sass-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>update-stylesheets</goal>
+
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sassOptions>
+						<always_update>true</always_update>
+						<style>${sass.OutputStyle}</style>
+						<debug_info>${debug}</debug_info>
+						<unix_newlines>true</unix_newlines>
+						<cache>false</cache>
+					</sassOptions>
+					<rubyVersion>2.0</rubyVersion>
+					<useCompass>true</useCompass>
+					<resources>
+						<resource>
+							<source>
+								<directory>${basedir}/src/main/webapp/css</directory>
+								<includes>
+									<include>*.scss</include>
+								</includes>
+								<excludes />
+							</source>
+							<relativeOutputDirectory>.</relativeOutputDirectory>
+         
+							<destination>${basedir}/src/main/webapp/css</destination>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+
+			<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-resources-plugin</artifactId>
+	            <version>2.5</version>
+	            <executions>
+	                <execution>
+	                    <id>log4j</id>
+	                    <phase>process-resources</phase>
+	                    <goals>
+	                        <goal>copy-resources</goal>
+	                    </goals>
+	                    <configuration>
+	                    	<overwrite>true</overwrite>
+	                    
+	                        <outputDirectory>${basedir}/target/classes/</outputDirectory>
+	                        <resources>
+								<resource>
+								    <directory>src/main/resources</directory>
+									<filtering>false</filtering>
+								</resource>
+		                        <resource>
+		                        	<directory>${basedir}/src/main/resources/prod</directory>
+									<filtering>true</filtering>
+		                        </resource>
+	                        </resources>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
+		</plugins>
+	</build>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-bom</artifactId>
+				<version>${arquillian.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- Project dependencies -->
+
+	<dependencies>
+	
+
+
+
+		<!-- 
+		
+			TEST 
+		
+		-->
+	
+
+		
+
+	</dependencies>
+ 	
+</project>
